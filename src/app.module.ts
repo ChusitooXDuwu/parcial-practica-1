@@ -2,6 +2,10 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ProyectModule } from './proyect/proyect.module';
+import { StudentModule } from './student/student.module';
+import { ProfessorModule } from './professor/professor.module';
+import { EvaluationModule } from './evaluation/evaluation.module';
 
 @Module({
   imports: [
@@ -14,6 +18,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       database: 'postgres', // Replace with your DB name
       synchronize: true, // Auto-creates schema. Disable for production.
     }),
+    ProyectModule,
+    StudentModule,
+    ProfessorModule,
+    EvaluationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
