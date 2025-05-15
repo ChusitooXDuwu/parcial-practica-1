@@ -2,7 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Proyect } from '../../proyect/entities/proyect.entity';
 
 @Entity()
-export class Estudiante {
+export class Student {
     @PrimaryGeneratedColumn('increment', { type: 'bigint' })
     id: number;
 

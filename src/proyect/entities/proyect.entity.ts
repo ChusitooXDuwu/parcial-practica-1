@@ -5,7 +5,7 @@ import {
     ManyToOne,
     OneToMany,
 } from 'typeorm';
-import { Estudiante } from '../../student/entities/student.entity';
+import { Student } from '../../student/entities/student.entity';
 import { Professor } from '../../professor/entities/professor.entity';
 import { Evaluation } from '../../evaluation/entities/evaluation.entity';
 
@@ -35,8 +35,8 @@ export class Proyect {
     @Column()
     fechaFin: string;
 
-    @ManyToOne(() => Estudiante, (estudiante) => estudiante.proyectos)
-    lider: Estudiante;
+    @ManyToOne(() => Student, (estudiante) => estudiante.proyectos)
+    lider: Student;
 
     @ManyToOne(() => Professor, (profesor) => profesor.mentorias)
     mentor: Professor;
