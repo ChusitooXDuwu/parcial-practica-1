@@ -1,98 +1,185 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Sistema de Gestión de Iniciativas de Investigación
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este proyecto implementa una API RESTful para la gestión de iniciativas de investigación lideradas por estudiantes de pregrado, desarrollada con NestJS.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Descripción
 
-## Description
+El sistema permite la interacción entre estudiantes, profesores y la decanatura de investigación, facilitando la gestión de:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Estudiantes**: con restricciones de promedio y semestre
+- **Profesores**: con validación de extensión y asignación como evaluadores
+- **Proyectos**: con estados, presupuesto y relaciones con líderes y mentores
+- **Evaluaciones**: con validación de calificaciones y restricción de evaluador ≠ mentor
 
-## Project setup
+## Requisitos previos
 
+- Node.js (v16 o superior)
+- PostgreSQL
+- npm o yarn
+
+## Instalación
+
+1. Clonar el repositorio:
+   ```bash
+   git clone https://github.com/tu-usuario/parcial-practico-2.git
+   cd parcial-practico-2
+   ```
+
+2. Instalar dependencias:
+   ```bash
+   npm install
+   ```
+
+3. Instalar dependencias específicas requeridas:
+   ```bash
+   npm install class-validator class-transformer
+   ```
+
+4. Configurar base de datos PostgreSQL:
+   - Asegúrate de tener PostgreSQL ejecutándose
+   - Revisa la configuración en `src/app.module.ts` y ajusta las credenciales según sea necesario
+
+## Ejecución
+
+1. Iniciar en modo desarrollo:
+   ```bash
+   npm run start:dev
+   ```
+
+2. La API estará disponible en `http://localhost:3000/api/v1/`
+
+## Pruebas
+
+### Ejecutar pruebas unitarias:
 ```bash
-$ npm install
+npm run test
 ```
 
-## Compile and run the project
+### Pruebas con Postman:
+Este proyecto incluye una colección de Postman completa para probar todos los endpoints.
 
-```bash
-# development
-$ npm run start
+1. Importar la colección desde `postman/Sistema de Gestión de Iniciativas.postman_collection.json`
+2. Configurar el entorno en Postman con la variable `base_url` establecida en `http://localhost:3000/api/v1`
+3. Ejecutar las pruebas en el siguiente orden recomendado:
+   - Creación de entidades (Estudiantes, Profesores)
+   - Creación de relaciones (Proyectos, Evaluaciones)
+   - Operaciones de consulta y actualización
+   - Casos de prueba negativos
 
-# watch mode
-$ npm run start:dev
+## Estructura del proyecto
 
-# production mode
-$ npm run start:prod
+```
+src/
+├── student/              # Módulo de estudiantes
+├── professor/            # Módulo de profesores
+├── proyect/              # Módulo de proyectos
+├── evaluation/           # Módulo de evaluaciones
+└── main.ts               # Punto de entrada de la aplicación
 ```
 
-## Run tests
+## Reglas de negocio implementadas
 
-```bash
-# unit tests
-$ npm run test
+### Estudiantes
+- El promedio debe ser mayor a 3.2
+- El semestre debe ser mayor o igual a 4
+- No se puede eliminar un estudiante con proyectos activos
 
-# e2e tests
-$ npm run test:e2e
+### Profesores
+- La extensión debe tener exactamente 5 dígitos
+- Un profesor solo puede tener hasta 3 evaluaciones activas
 
-# test coverage
-$ npm run test:cov
-```
+### Proyectos
+- El título debe tener más de 15 caracteres
+- El presupuesto debe ser mayor a 0
+- Un proyecto puede tener un estado entre 0 y 4
 
-## Deployment
+### Evaluaciones
+- El evaluador no puede ser el mentor del proyecto
+- La calificación debe estar entre 0 y 5
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## API Endpoints
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Estudiantes
+- `GET /student` - Listar todos los estudiantes
+- `GET /student/:id` - Obtener un estudiante por ID
+- `POST /student` - Crear un estudiante
+- `PATCH /student/:id` - Actualizar un estudiante
+- `DELETE /student/:id` - Eliminar un estudiante
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+### Profesores
+- `GET /professor` - Listar todos los profesores
+- `GET /professor/:id` - Obtener un profesor por ID
+- `POST /professor` - Crear un profesor
+- `PATCH /professor/:id` - Actualizar un profesor
+- `DELETE /professor/:id` - Eliminar un profesor
+- `POST /professor/:id/asignar-evaluador` - Asignar profesor como evaluador
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### Proyectos
+- `GET /proyect` - Listar todos los proyectos
+- `GET /proyect/:id` - Obtener un proyecto por ID
+- `POST /proyect` - Crear un proyecto
+- `PATCH /proyect/:id` - Actualizar un proyecto
+- `DELETE /proyect/:id` - Eliminar un proyecto
+- `POST /proyect/:id/avanzar` - Avanzar el estado del proyecto
+- `GET /proyect/:id/estudiantes` - Listar estudiantes de un proyecto
 
-## Resources
+### Evaluaciones
+- `GET /evaluation` - Listar todas las evaluaciones
+- `GET /evaluation/:id` - Obtener una evaluación por ID
+- `POST /evaluation` - Crear una evaluación
+- `PATCH /evaluation/:id` - Actualizar una evaluación
+- `DELETE /evaluation/:id` - Eliminar una evaluación
 
-Check out a few resources that may come in handy when working with NestJS:
+## Documentación adicional
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+- **Justificación de pruebas**: Revise `postman/POSTMAN_JUSTIFICATION.md` para entender los casos de prueba implementados.
 
-## Support
+## Ejemplo de uso
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+1. Crea un estudiante con promedio válido:
+   ```http
+   POST http://localhost:3000/api/v1/student
+   {
+     "cedula": 1234567890,
+     "nombre": "Juan Pérez",
+     "semestre": 6,
+     "programa": "Ingeniería de Sistemas",
+     "promedio": 4.2
+   }
+   ```
 
-## Stay in touch
+2. Crea un profesor con extensión de 5 dígitos:
+   ```http
+   POST http://localhost:3000/api/v1/professor
+   {
+     "cedula": 1122334455,
+     "nombre": "Carlos Rodríguez",
+     "departamento": "Ciencias de la Computación",
+     "extension": 12345,
+     "esParEvaluador": false
+   }
+   ```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+3. Crea un proyecto asociando estudiante y profesor:
+   ```http
+   POST http://localhost:3000/api/v1/proyect
+   {
+     "titulo": "Sistema de gestión académica avanzado",
+     "area": "Sistemas de Información",
+     "presupuesto": 5000,
+     "notaFinal": 0,
+     "estado": 0,
+     "fechaInicio": "2025-05-01",
+     "fechaFin": "2025-12-31",
+     "liderId": 1,
+     "mentorId": 1
+   }
+   ```
 
-## License
+## Autor
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+[Tu Nombre](https://github.com/tu-usuario)
+
+## Licencia
+
+Este proyecto está bajo la Licencia MIT.
