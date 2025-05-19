@@ -4,6 +4,7 @@ import { Repository, Not } from 'typeorm';
 import { Student } from './entities/student.entity';
 import { Proyect } from '../proyect/entities/proyect.entity';
 import { CreateStudentDto } from './dto/create-student.dto';
+import { UpdateStudentDto } from './dto/update-student.dto';
 
 @Injectable()
 export class StudentService {
@@ -13,7 +14,11 @@ export class StudentService {
 
     @InjectRepository(Proyect)
     private proyectRepository: Repository<Proyect>,
-  ) { }
+  ) {}
+
+  async create(createStudentDto: CreateStudentDto) {
+    return this.crearEstudiante(createStudentDto);
+  }
 
   async crearEstudiante(createStudentDto: CreateStudentDto) {
     if (createStudentDto.promedio <= 3.2 || createStudentDto.semestre < 4) {
@@ -21,6 +26,23 @@ export class StudentService {
     }
     const student = this.studentRepository.create(createStudentDto);
     return this.studentRepository.save(student);
+  }
+
+  async findAll() {
+    return this.studentRepository.find();
+  }
+
+  async findOne(id: number) {
+    return this.studentRepository.findOneBy({ id });
+  }
+
+  async update(id: number, updateStudentDto: UpdateStudentDto) {
+    await this.studentRepository.update(id, updateStudentDto);
+    return this.findOne(id);
+  }
+
+  async remove(id: number) {
+    return this.eliminarEstudiante(id);
   }
 
   async eliminarEstudiante(id: number) {

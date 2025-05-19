@@ -1,0 +1,1322 @@
+{
+	"info": {
+		"_postman_id": "b450bd43-efad-42c6-9a99-ddc3476b9b79",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19855865"
+	},
+	"item": [
+		{
+			"name": "Students",
+			"item": [
+				{
+					"name": "Student by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar que la respuesta no está vacía\r",
+									"pm.test(\"Response is not empty\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.not.be.empty;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/student/{{student_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student",
+								"{{student_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Students",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar que la respuesta no está vacía\r",
+									"pm.test(\"Response is not empty\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.not.be.empty;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/student",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 201\", function() {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has required properties\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.id).to.exist;\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"// Guardar ID para otras pruebas\r",
+									"if (pm.response.code === 201) {\r",
+									"    const response = pm.response.json();\r",
+									"   \r",
+									"    pm.environment.set(\"student_id\", response.id);\r",
+									"    console.log(\"Entity ID saved: \" + response.id);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cedula\": 1234567890,\r\n    \"nombre\": \"Juan Pérez\",\r\n    \"semestre\": 6,\r\n    \"programa\": \"Ingeniería de Sistemas\",\r\n    \"promedio\": 4\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/student",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar que la respuesta contiene las propiedades actualizadas\r",
+									"pm.test(\"Response has updated properties\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.id).to.exist;\r",
+									"    // Verificar que las propiedades que se enviaron a actualizar estén en la respuesta\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"semestre\": 7,\r\n    \"promedio\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/student/{{student_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student",
+								"{{student_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Student",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar mensaje de confirmación\r",
+									"pm.test(\"Deletion confirmation message\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.message).to.exist;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/student/{{student_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student",
+								"{{student_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Professors",
+			"item": [
+				{
+					"name": "Professor by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar que la respuesta no está vacía\r",
+									"pm.test(\"Response is not empty\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.not.be.empty;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/professor/{{professor_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"professor",
+								"{{professor_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Professors",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar que la respuesta no está vacía\r",
+									"pm.test(\"Response is not empty\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.not.be.empty;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/professor",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"professor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Professor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function() {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar estructura de respuesta\r",
+									"pm.test(\"Response has required properties\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.id).to.exist;\r",
+									"    // Añadir otras propiedades según la entidad\r",
+									"});\r",
+									"\r",
+									"if (pm.response.code === 201) {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.environment.set(\"professor_id\", response.id);\r",
+									"    console.log(\"Professor ID saved: \" + response.id);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cedula\": 1122334455,\r\n    \"nombre\": \"Carlos Rodríguez\",\r\n    \"departamento\": \"Ciencias de la Computación\",\r\n    \"extension\": 12345,\r\n    \"esParEvaluador\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/professor",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"professor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign Professor as Evaluator",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar mensaje de confirmación\r",
+									"pm.test(\"Professor assigned as evaluator\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.message).to.include(\"asignado como par evaluador\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/professor/{{professor_id}}/asignar-evaluador",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"professor",
+								"{{professor_id}}",
+								"asignar-evaluador"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Professor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar que la respuesta contiene las propiedades actualizadas\r",
+									"pm.test(\"Response has updated properties\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.id).to.exist;\r",
+									"    // Verificar que las propiedades que se enviaron a actualizar estén en la respuesta\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"departamento\": \"Ingeniería de Software\",\r\n    \"extension\": 54321\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/professor/{{professor_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"professor",
+								"{{professor_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Professor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar mensaje de confirmación\r",
+									"pm.test(\"Deletion confirmation message\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.message).to.exist;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/professor/{{professor_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"professor",
+								"{{professor_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Proyects",
+			"item": [
+				{
+					"name": "Proyect by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar que la respuesta no está vacía\r",
+									"pm.test(\"Response is not empty\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.not.be.empty;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/proyect/{{project_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proyect",
+								"{{project_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Proyects",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar que la respuesta no está vacía\r",
+									"pm.test(\"Response is not empty\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.not.be.empty;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/proyect",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proyect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Proyect",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function() {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar estructura de respuesta\r",
+									"pm.test(\"Response has required properties\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.id).to.exist;\r",
+									"    // Añadir otras propiedades según la entidad\r",
+									"});\r",
+									"\r",
+									"if (pm.response.code === 201) {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.environment.set(\"project_id\", response.id);\r",
+									"    pm.environment.set(\"project_current_state\", response.estado);\r",
+									"    console.log(\"Project ID saved: \" + response.id);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titulo\": \"Sistema de gestión académica avanzado\",\r\n    \"area\": \"Sistemas de Información\",\r\n    \"presupuesto\": 5000,\r\n    \"notaFinal\": 0,\r\n    \"estado\": 0,\r\n    \"fechaInicio\": \"2025-05-01\",\r\n    \"fechaFin\": \"2025-12-31\",\r\n    \"liderId\": \"{{student_id}}\",\r\n    \"mentorId\": \"{{professor_id}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/proyect",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proyect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Proyect",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar que la respuesta contiene las propiedades actualizadas\r",
+									"pm.test(\"Response has updated properties\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.id).to.exist;\r",
+									"    // Verificar que las propiedades que se enviaron a actualizar estén en la respuesta\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"presupuesto\": 6000,\r\n    \"area\": \"Inteligencia Artificial\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/proyect/{{project_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proyect",
+								"{{project_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Proyect",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar mensaje de confirmación\r",
+									"pm.test(\"Deletion confirmation message\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.message).to.exist;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/proyect/{{project_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proyect",
+								"{{project_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Advance Project State",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar que el estado ha avanzado\r",
+									"pm.test(\"Project state advanced\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    const previousState = parseInt(pm.environment.get(\"project_current_state\") || \"0\");\r",
+									"    pm.expect(response.estado).to.equal(previousState + 1);\r",
+									"    \r",
+									"    // Actualizar el estado actual para la próxima prueba\r",
+									"    pm.environment.set(\"project_current_state\", response.estado);\r",
+									"    console.log(`Project state changed from ${previousState} to ${response.estado}`);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/proyect/{{project_id}}/avanzar",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proyect",
+								"{{project_id}}",
+								"avanzar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all students from a proyect",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar que la respuesta no está vacía\r",
+									"pm.test(\"Response is not empty\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.not.be.empty;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/proyect/{{project_id}}/estudiantes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proyect",
+								"{{project_id}}",
+								"estudiantes"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Evaluations",
+			"item": [
+				{
+					"name": "Evaluation by Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar que la respuesta no está vacía\r",
+									"pm.test(\"Response is not empty\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.not.be.empty;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/evaluation/{{evaluation_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"evaluation",
+								"{{evaluation_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Evaluations",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar que la respuesta no está vacía\r",
+									"pm.test(\"Response is not empty\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response).to.not.be.empty;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/evaluation",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"evaluation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Evaluation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201\", function() {\r",
+									"    pm.response.to.have.status(201);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar estructura de respuesta\r",
+									"pm.test(\"Response has required properties\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.id).to.exist;\r",
+									"    // Añadir otras propiedades según la entidad\r",
+									"});\r",
+									"\r",
+									"if (pm.response.code === 201) {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.environment.set(\"evaluation_id\", response.id);\r",
+									"    console.log(\"Evaluation ID saved: \" + response.id);\r",
+									"}"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"proyectoId\": 1,\r\n    \"profesorId\": 2,\r\n    \"calificacion\": 4.5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/evaluation",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"evaluation"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Evaluation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar que la respuesta contiene las propiedades actualizadas\r",
+									"pm.test(\"Response has updated properties\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.id).to.exist;\r",
+									"    // Verificar que las propiedades que se enviaron a actualizar estén en la respuesta\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"calificacion\": 4.8\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/evaluation/{{evaluation_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"evaluation",
+								"{{evaluation_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Evaluation",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar estado y tipo de respuesta\r",
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar mensaje de confirmación\r",
+									"pm.test(\"Deletion confirmation message\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.message).to.exist;\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/evaluation/{{evaluation_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"evaluation",
+								"{{evaluation_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CasosNegativos",
+			"item": [
+				{
+					"name": "Estudiante prom bajo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cedula\": 9876543210,\r\n    \"nombre\": \"María López\",\r\n    \"semestre\": 6,\r\n    \"programa\": \"Ingeniería de Sistemas\",\r\n    \"promedio\": 3.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/student",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Estudiante Semestre temprano",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cedula\": 5678901234,\r\n    \"nombre\": \"Pedro Gómez\",\r\n    \"semestre\": 3,\r\n    \"programa\": \"Ingeniería de Sistemas\",\r\n    \"promedio\": 4.0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/student",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"student"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Proyecto Titulo Corto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titulo\": \"Título Corto\",\r\n    \"area\": \"Sistemas de Información\",\r\n    \"presupuesto\": 5000,\r\n    \"notaFinal\": 0,\r\n    \"estado\": 0,\r\n    \"fechaInicio\": \"2025-05-01\",\r\n    \"fechaFin\": \"2025-12-31\",\r\n    \"liderId\": \"{{student_id}}\",\r\n    \"mentorId\": \"{{professor_id}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/proyect",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proyect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Proyecto Presupuesto Corto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"titulo\": \"Sistema de gestión académica avanzado\",\r\n    \"area\": \"Sistemas de Información\",\r\n    \"presupuesto\": 0,\r\n    \"notaFinal\": 0,\r\n    \"estado\": 0,\r\n    \"fechaInicio\": \"2025-05-01\",\r\n    \"fechaFin\": \"2025-12-31\",\r\n    \"liderId\": \"{{student_id}}\",\r\n    \"mentorId\": \"{{professor_id}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/proyect",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"proyect"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Professor Invalid Extenssion",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar código de error\r",
+									"pm.test(\"Error is returned with 400 status\", function() {\r",
+									"    pm.response.to.have.status(400);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar mensaje de error sobre extensión\r",
+									"pm.test(\"Error message contains extension validation info\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.message).to.exist;\r",
+									"    pm.expect(response.message).to.include(\"extensión\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cedula\": 8765432109,\r\n    \"nombre\": \"Ana Martínez\",\r\n    \"departamento\": \"Matemáticas\",\r\n    \"extension\": 123,\r\n    \"esParEvaluador\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/professor",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"professor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Evaluador igual Mentor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Verificar código de error\r",
+									"pm.test(\"Error is returned with 400 status\", function() {\r",
+									"    pm.response.to.have.status(400);\r",
+									"    pm.response.to.be.json;\r",
+									"});\r",
+									"\r",
+									"// Verificar mensaje de error sobre mentor/evaluador\r",
+									"pm.test(\"Error message contains mentor/evaluator validation\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.message).to.exist;\r",
+									"    pm.expect(response.message).to.include(\"evaluador\");\r",
+									"    pm.expect(response.message).to.include(\"mentor\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"proyectoId\": \"{{project_id}}\",\r\n    \"profesorId\": \"{{professor_id}}\",\r\n    \"calificacion\": 4.5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/evaluation",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"evaluation"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:3000/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "student_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "professor_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "project_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "evaluation_id",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

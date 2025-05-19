@@ -31,4 +31,9 @@ export class ProfessorController {
   remove(@Param('id') id: string) {
     return this.professorService.remove(+id);
   }
+
+  @Post(':id/asignar-evaluador')
+  asignarEvaluador(@Param('id') id: string) {
+    return this.professorService.asignarEvaluador(+id);
+  }
 }

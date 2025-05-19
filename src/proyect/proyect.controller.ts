@@ -31,4 +31,14 @@ export class ProyectController {
   remove(@Param('id') id: string) {
     return this.proyectService.remove(+id);
   }
+
+  @Post(':id/avanzar')
+  avanzarProyecto(@Param('id') id: string) {
+    return this.proyectService.avanzarProyecto(+id);
+  }
+
+  @Get(':id/estudiantes')
+  findAllEstudiantes(@Param('id') id: string) {
+    return this.proyectService.findAllEstudiantes(+id);
+  }
 }
