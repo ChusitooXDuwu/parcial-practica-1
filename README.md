@@ -1,8 +1,6 @@
-# Sistema de Gestión de Iniciativas de Investigación
+# Parcial back Web Wyo Chu
 
-Este proyecto implementa una API RESTful para la gestión de iniciativas de investigación lideradas por estudiantes de pregrado, desarrollada con NestJS.
 
-## Descripción
 
 El sistema permite la interacción entre estudiantes, profesores y la decanatura de investigación, facilitando la gestión de:
 
@@ -21,8 +19,7 @@ El sistema permite la interacción entre estudiantes, profesores y la decanatura
 
 1. Clonar el repositorio:
    ```bash
-   git clone https://github.com/tu-usuario/parcial-practico-2.git
-   cd parcial-practico-2
+   git clone https://github.com/ChusitooXDuwu/parcial-practica-1
    ```
 
 2. Instalar dependencias:
@@ -32,6 +29,7 @@ El sistema permite la interacción entre estudiantes, profesores y la decanatura
 
 3. Instalar dependencias específicas requeridas:
    ```bash
+   npm i
    npm install class-validator class-transformer
    ```
 
@@ -176,10 +174,3 @@ src/
    }
    ```
 
-## Autor
-
-[Tu Nombre](https://github.com/tu-usuario)
-
-## Licencia
-
-Este proyecto está bajo la Licencia MIT.
